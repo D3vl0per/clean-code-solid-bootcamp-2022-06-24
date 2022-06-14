@@ -13,8 +13,12 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      - name: Pre-Install
+        run: |
+          npm i -g @angular/cli
+
       - name: Install
-        run: npm i
+        run: npm ci
 
       - name: Test
         run: ng test
