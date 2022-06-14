@@ -31,4 +31,4 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
-          publish_dir: ./
+          target-folder: ./
