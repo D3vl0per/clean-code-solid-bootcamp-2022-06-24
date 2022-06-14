@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ViewModel} from "./model/ViewModel";
-import {IAPIResult} from "./model/IAPIResult";
 import {Bank} from "./controller/Bank";
+import BankService from "./services/BankService";
 
 @Component({
   selector: 'app-root',
@@ -15,8 +15,9 @@ export class AppComponent {
 
   async search(city: string, bank: string) {
     if(city ==='bratislava' && bank == "cib") bank = 'vub';
-    let data = await this.fetchData(bank, city);
+    let data = await BankService.fetchData(bank, city);
     let apiResult = data[0];
+
     let bankname = apiResult.address.amenity;
     let bankObj = new Bank(apiResult.address.country_code, bankname);
     let viewModel = {
@@ -28,6 +29,7 @@ export class AppComponent {
       countryIconURL: bankObj.countryIconURL,
       display_name: apiResult.display_name
     } as ViewModel;
+
     this.terminalModel = {
       bank: viewModel.bank,
       country: viewModel.country,
@@ -41,15 +43,5 @@ export class AppComponent {
     };
   }
 
-  url = "https://nominatim.openstreetmap.org/search?format=json&type=bank&addressdetails=1";
-  fetchData(bankname: string, cityname: string): Promise<Array<IAPIResult>> {
-    let query = `q='${bankname},${cityname}`;
-    return fetch(this.url + '&' + query)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        return response.json() as Promise<Array<IAPIResult>>;
-      });
-  }
+
 }
