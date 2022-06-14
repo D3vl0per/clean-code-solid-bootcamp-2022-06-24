@@ -3,10 +3,12 @@ Előkészítés:
 Lokális fejlesztőkörnyezet telepítése
 - https://angular.io/guide/setup-local
 - Node 16 Active LTS
+- Chrome for tests
 
-npm install
+```npm install
 ng serve --open
 ng test
+```
 
 Postman letöltése: https://www.postman.com/downloads/
 
