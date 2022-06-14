@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ViewModel} from "./model/ViewModel";
 import {Bank} from "./controller/Bank";
 import BankService from "./services/BankService";
+import BankPresenter from "./presenter/BankPresenter";
 
 @Component({
   selector: 'app-root',
@@ -18,17 +19,8 @@ export class AppComponent {
     let data = await BankService.fetchData(bank, city);
     let apiResult = data[0];
 
-    let bankname = apiResult.address.amenity;
-    let bankObj = new Bank(apiResult.address.country_code, bankname);
-    let viewModel = {
-      bank: apiResult.address.amenity,
-      country: apiResult.address.country,
-      city: apiResult.address.city,
-      road: apiResult.address.road,
-      bankIconURL: bankObj.bankIconURL,
-      countryIconURL: bankObj.countryIconURL,
-      display_name: apiResult.display_name
-    } as ViewModel;
+    const bankPresenter = new BankPresenter();
+    const viewModel = bankPresenter.getModel(apiResult);
 
     this.terminalModel = {
       bank: viewModel.bank,
