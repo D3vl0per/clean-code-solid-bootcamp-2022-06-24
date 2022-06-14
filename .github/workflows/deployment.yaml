@@ -31,4 +31,4 @@ jobs:
         with:
           branch: gh-pages
           folder: dist/clean-architecture-0614/
-          target-folder: ./public
+          target-folder: ./
